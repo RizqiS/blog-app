@@ -1,0 +1,46 @@
+### 
+GET http://localhost:8080/auth
+###
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+   "email": "rizqi@gmail.com",
+   "password": "rizqi123"
+}
+###
+DELETE http://localhost:8080/auth/secret/delete/user/65e400dcc12ec7d74624262b
+
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+   "email": "rizqi@gmail.com",
+   "password": "rizqi123"
+}
+
+###
+GET http://localhost:8080/events
+
+###
+POST http://localhost:8080/events
+Content-Type: application/json
+
+{
+   "title": "Why Japan has so many never travelers",
+   "description": "A survey done last year by global intelligence company Morning Consult showed that 35% of Japanese respondents said they were unwilling to travel again, the highest number of any country. Tetsu Nakamura, a professor at Tamagawa University and a tourism behavior and psychology specialist, says the results are not at all surprising. “In 2019, even before the pandemic, (Japanese) people who traveled abroad at least once a year made up about 10% of the population,” says Nakamura. According a study Nakamura did back in 2016, there are what he calls “passivists,” those who say they want to travel abroad but won’t, and “denialists” – people who show no interest in traveling abroad and won’t. Together, these two groups comprise around 70% of respondents in his pre-pandemic study, with “denialists” comprising roughly 30% of them.",
+   "image": "https://media.cnn.com/api/v1/images/stellar/prod/230210161917-01-japan-never-traveler-culture-tokyo.jpg?c=original"
+}
+
+###
+PATCH  http://localhost:8080/events/65e5649609a91b5972508982
+Content-Type: application/json
+
+{
+   "_id": "65e5649609a91b5972508982",
+   "title": "latest updates",
+   "description": "description latest",
+   "image": "https://t.ctcdn.com.br/uyqmM08mwWpaNTwOlWIxW9a0DjU=/1400x788/smart/i460517.png"
+}
