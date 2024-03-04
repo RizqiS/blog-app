@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import Input from "./UI/Input";
+import Input from "../UI/Input";
 import { z } from "zod";
 import { useSubmit } from "react-router-dom";
-import { TEvents } from "../types/events";
+import { TEvents } from "../../types/events";
 
 type TFormEvents = {
   method: "post" | "patch";
@@ -62,7 +62,7 @@ export default function FormEventsBlog({ method, action, events }: TFormEvents) 
   };
 
   return (
-    <div className="w-1/2">
+    <div className="w-1/2 mb-3">
       <form onSubmit={handleSubmit}>
         <Input
           text="Title Blogs"
@@ -114,7 +114,7 @@ export default function FormEventsBlog({ method, action, events }: TFormEvents) 
         />
         {message.description && <p className="text-red-500 my-3">{message.description}</p>}
         <button className="transition duration-150 bg-slate-500 text-slate-100 py-1 px-3 rounded-md hover:bg-slate-600">
-          Save Blog
+          {method === "post" ? "Save" : "Edit"} Blog
         </button>
       </form>
     </div>

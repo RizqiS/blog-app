@@ -1,10 +1,10 @@
 import { Link, useRouteLoaderData } from "react-router-dom";
-import { TEvents } from "../types/events";
+import { TEvents } from "../../types/events";
 import { Suspense, lazy, useContext } from "react";
-import { ContextModal } from "../context/Event/Modal";
+import { ContextModal } from "../../context/Event/Modal";
 // import Modal from "../components/UI/Modal";
 
-const Modal = lazy(() => import("../components/UI/Modal"));
+const Modal = lazy(() => import("../../components/UI/Modal"));
 export default function EventDetails() {
   const modal_ctx = useContext(ContextModal);
   const eventsPromise = useRouteLoaderData("event-detail") as TEvents;
@@ -46,7 +46,7 @@ export default function EventDetails() {
           height={100}
           className="w-full h-96 object-cover object-center rounded-lg mx-6 md:mx-0"
         />
-        <p className="mt-12 leading-6 text-base">{eventsPromise.description}</p>
+        <p className="mt-12 leading-7 text-base">{eventsPromise.description}</p>
       </div>
     </section>
   );

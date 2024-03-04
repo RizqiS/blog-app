@@ -9,10 +9,10 @@ import { lazy, Suspense } from "react";
 // import EventEdits from "./pages/EventEdits";
 // import EventsBlog from "./pages/EventsBlog";
 
-const EventDetails = lazy(() => import("./pages/EventDetails"));
-const EventNews = lazy(() => import("./pages/EventNews"));
-const EventEdits = lazy(() => import("./pages/EventEdits"));
-const EventsBlog = lazy(() => import("./pages/EventsBlog"));
+const EventDetails = lazy(() => import("./pages/events-blog/EventDetails"));
+const EventNews = lazy(() => import("./pages/events-blog/EventNews"));
+const EventEdits = lazy(() => import("./pages/events-blog/EventEdits"));
+const EventsBlog = lazy(() => import("./pages/events-blog/EventsBlog"));
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,11 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <EventsBlog />,
+            element: (
+              <Suspense>
+                <EventsBlog />
+              </Suspense>
+            ),
           },
           {
             path: ":id",

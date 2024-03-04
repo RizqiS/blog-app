@@ -1,6 +1,6 @@
 import { useNavigate, useRouteLoaderData } from "react-router-dom";
-import { TEvents } from "../types/events";
-import FormEventsBlog from "../components/FormEventsBlog";
+import { TEvents } from "../../types/events";
+import FormEventsBlog from "../../components/EventBlog/FormEventsBlog";
 
 export default function EventEdits() {
   const events = useRouteLoaderData("event-detail") as TEvents;
@@ -10,7 +10,7 @@ export default function EventEdits() {
     <section className="container border flex flex-col justify-center items-center mx-auto">
       <button
         onClick={() => navigate(`/events/${events._id}/detail`)}
-        className="mb-6 tracking-wider font-serif px-3 py-1.5 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition duration-150"
+        className="mb-6 tracking-wider font-serif px-3 py-1.5 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition duration-150 mt-3"
       >
         / back to detail
       </button>
