@@ -28,9 +28,6 @@ export default function EventDetails() {
           >
             Edit Event
           </Link>
-          {/* <Link to={`/`} className="transition duration-150 text-pink-600 hover:text-pink-500">
-            Delete Event
-          </Link> */}
           <button className="transition duration-150 text-pink-600 hover:text-pink-500" onClick={modal_ctx.openModal}>
             Delete Event
           </button>

@@ -7,7 +7,7 @@ export default function EventEdits() {
   const navigate = useNavigate();
 
   return (
-    <section className="container border flex flex-col justify-center items-center">
+    <section className="container border flex flex-col justify-center items-center mx-auto">
       <button
         onClick={() => navigate(`/events/${events._id}/detail`)}
         className="mb-6 tracking-wider font-serif px-3 py-1.5 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition duration-150"

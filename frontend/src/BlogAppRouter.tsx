@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { getEvents as getEventsLoader, addEvents, deleteEvents } from "./libs/events-api";
 import RootLayout from "./layout/RootLayout";
 import HomeBlogs from "./pages/HomeBlogs";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 
 // import EventDetails from "./pages/EventDetails";
 // import EventNews from "./pages/EventNews";
@@ -40,19 +40,31 @@ const router = createBrowserRouter([
               {
                 path: "detail",
                 action: deleteEvents,
-                element: <EventDetails />,
+                element: (
+                  <Suspense fallback={<p className="text-center">Loading...</p>}>
+                    <EventDetails />
+                  </Suspense>
+                ),
               },
               {
                 path: "edit",
                 action: addEvents,
-                element: <EventEdits />,
+                element: (
+                  <Suspense fallback={<p className="text-center">Loading...</p>}>
+                    <EventEdits />
+                  </Suspense>
+                ),
               },
             ],
           },
           {
             path: "new",
             action: addEvents,
-            element: <EventNews />,
+            element: (
+              <Suspense fallback={<p className="text-center">Loading...</p>}>
+                <EventNews />
+              </Suspense>
+            ),
           },
         ],
       },
