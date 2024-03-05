@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const bodyParse = require("body-parser");
 const EventBlogs = require("./routes/EventsBlogs");
 const Authentication = require("./routes/Authentication");
+const timeout = require("connect-timeout");
 
 /* connect to database */
 mongoose.connect(process.env.DATABASE_URL);
@@ -17,6 +18,7 @@ db.once("open", () => console.log("Connected to Mongoose"));
 const app = express();
 
 /* middleware */
+app.use(timeout("5s"));
 app.use(bodyParse.json());
 app.use(express.json());
 app.use((req, res, next) => {
