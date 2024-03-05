@@ -1,6 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { Form, NavLink, useRouteLoaderData } from "react-router-dom";
 
 export default function NavbarBlogs() {
+  const token = useRouteLoaderData("token") as string;
+
   const activeLink = ({ isActive }: { isActive: boolean }) => {
     return isActive ? "text-sky-700 text-lg" : "text-slate-800 text-lg";
   };
@@ -18,11 +20,20 @@ export default function NavbarBlogs() {
             Events
           </NavLink>
         </li>
-        <li>
-          <NavLink to={"/auth?mode=login"} className={activeLink}>
-            Login
-          </NavLink>
-        </li>
+        {!token && (
+          <li>
+            <NavLink to={"/auth?mode=login"} className={activeLink}>
+              Login
+            </NavLink>
+          </li>
+        )}
+        {token && (
+          <li>
+            <Form action="/logout" method="post">
+              <button className={"text-slate-800 hover:text-pink-700 transition duration-150 text-lg"}>Logout</button>
+            </Form>
+          </li>
+        )}
       </ul>
     </nav>
   );

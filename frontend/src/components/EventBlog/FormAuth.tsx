@@ -16,10 +16,10 @@ export default function FormAuth({ title, check }: TFormAuth) {
   const errorValidation = resActionError as TFormErrorValidation;
 
   return (
-    <section className="max-w-3xl mx-auto mt-12 border py-6">
+    <section className="w-full md:max-w-3xl mx-auto mt-12 border py-6">
       <div className="flex flex-col justify-center items-center">
         <h2 className="text-3xl mb-6 font-semibold">{title}</h2>
-        <Form method="post" className="w-1/2">
+        <Form method="post" className="w-full px-6 md:px-0 md:w-1/2">
           <Input
             option="input"
             text="Email"

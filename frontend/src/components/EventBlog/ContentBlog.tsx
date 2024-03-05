@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import { TEvents } from "../../types/events";
-import HeaderBlog from "./HeaderBlog";
 type TContentBlogProps = {
+  isBlur?: boolean;
   events: TEvents[];
 };
 
-export default function ContentBlog({ events }: TContentBlogProps) {
+export default function ContentBlog({ events, isBlur }: TContentBlogProps) {
   return (
     <div className="w-full border">
-      <HeaderBlog />
       <div className="my-12 max-w-5xl mx-6 lg:mx-auto drop-shadow-lg">
         <article className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 group">
           {events &&
@@ -21,7 +20,9 @@ export default function ContentBlog({ events }: TContentBlogProps) {
                   src={item.image}
                   width={100}
                   height={100}
-                  className="object-cover object-top w-full h-[190px] blur-sm group-hover:blur-0 group-hover:transition group-hover:duration-150"
+                  className={`object-cover object-top w-full h-[190px] ${
+                    isBlur && "blur-sm group-hover:blur-0"
+                  } group-hover:transition group-hover:duration-150`}
                   alt=""
                 />
                 <div className="mx-3 my-1.5 ">
@@ -32,7 +33,7 @@ export default function ContentBlog({ events }: TContentBlogProps) {
                     </span>
                     <Link
                       to={`/events/${item._id}/detail`}
-                      className="invisible text-xs px-2 py-1 rounded-lg cursor-pointer group-hover/content:visible group-hover/content:bg-sky-500 group-hover/content:text-white group-hover/content:transition group-hover/content:duration-150 inline-block mb-1"
+                      className="visible text-xs px-2 py-1 rounded-lg cursor-pointer bg-sky-500 text-white md:invisible md:group-hover/content:visible md:group-hover/content:bg-sky-500 md:group-hover/content:text-white group-hover/content:transition group-hover/content:duration-150 inline-block mb-1"
                     >
                       show detail{" "}
                     </Link>

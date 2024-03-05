@@ -5,8 +5,20 @@ const { checkAuthMiddleware } = require("../utils/auths");
 const { isValidText, isValidImageUrl } = require("../utils/validations");
 
 router.get("/", async (req, res, next) => {
+  const { limit, page } = req.query;
+
+  let events;
+
   try {
-    const events = await EventsBlog.find({});
+    events = await EventsBlog.find({});
+    if (limit !== "") {
+      events = await EventsBlog.find().limit(parseInt(limit));
+    }
+    if (limit !== "" || page !== "") {
+      events = await EventsBlog.find()
+        .limit(parseInt(limit))
+        .skip(parseInt(limit) * (parseInt(page) - 1));
+    }
     res.json(events);
   } catch (error) {
     next(error);
@@ -49,7 +61,6 @@ router.post("/", async (req, res, next) => {
     const events = await eventsNews.save();
     res.status(201).json({ message: "Event saved", events });
   } catch (error) {
-    console.log(req.token);
     next(error);
   }
 });

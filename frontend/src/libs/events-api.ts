@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, LoaderFunctionArgs, json, redirect } from "react-router-dom";
-import { getToken } from "../util/auth-token";
+import { getToken } from "../util/mytoken";
 
 const url: string = import.meta.env.VITE_BACEND_URL as string;
 type Params = {
@@ -11,6 +11,7 @@ const token = getToken();
 
 export async function getEvents({ params }: LoaderFunctionArgs<Params>) {
   let urlEvents = url + "/events";
+
   if (params.id) {
     urlEvents = url + "/events/" + params.id;
   }
@@ -18,6 +19,7 @@ export async function getEvents({ params }: LoaderFunctionArgs<Params>) {
   const resEvents = await fetch(`${urlEvents}`);
 
   const events = await resEvents.json();
+
   if (!resEvents.ok) {
     json({ message: "Could not fetch events." }, { status: 500 });
   }
@@ -37,21 +39,19 @@ export async function addEvents({ params, request }: ActionFunctionArgs<Params>)
     newUrl += `/${params.id}`;
   }
 
-  const config = {
+  const resEvents = await fetch(newUrl, {
     method: request.method,
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
     body: JSON.stringify(events),
-  };
-
-  const resEvents = await fetch(newUrl, config);
+  });
   const data = await resEvents.json();
   if (!resEvents) {
     json({ message: data.message }, { status: data.status });
   }
-  return redirect("/");
+  return redirect("/events");
 }
 
 export async function deleteEvents({ params, request }: LoaderFunctionArgs<Params>) {
@@ -61,5 +61,5 @@ export async function deleteEvents({ params, request }: LoaderFunctionArgs<Param
     },
     method: request.method,
   });
-  return redirect("/");
+  return redirect("/events");
 }

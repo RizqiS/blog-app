@@ -4,7 +4,9 @@ import { actionAuthentication } from "./libs/auth-api";
 import RootLayout from "./layout/RootLayout";
 import HomeBlogs from "./pages/HomeBlogs";
 import { lazy, Suspense } from "react";
-import Authentication from "./pages/events-blog/Authentication";
+import { logoutAction } from "./pages/events-blog/Logout";
+import { loaderToken, loaderCheckAuth } from "./util/mytoken";
+import ErrorPages from "./pages/Errors";
 
 // import EventDetails from "./pages/EventDetails";
 // import EventNews from "./pages/EventNews";
@@ -15,15 +17,18 @@ const EventDetails = lazy(() => import("./pages/events-blog/EventDetails"));
 const EventNews = lazy(() => import("./pages/events-blog/EventNews"));
 const EventEdits = lazy(() => import("./pages/events-blog/EventEdits"));
 const EventsBlog = lazy(() => import("./pages/events-blog/EventsBlog"));
+const Authentication = lazy(() => import("./pages/events-blog/Authentication"));
 
 const router = createBrowserRouter([
   {
+    id: "token",
     path: "/",
+    loader: loaderToken,
+    errorElement: <ErrorPages />,
     element: <RootLayout />,
     children: [
       {
         index: true,
-        loader: getEventsLoader,
         element: <HomeBlogs />,
       },
       {
@@ -31,6 +36,7 @@ const router = createBrowserRouter([
         element: null,
         children: [
           {
+            loader: getEventsLoader,
             index: true,
             element: (
               <Suspense>
@@ -39,8 +45,8 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: ":id",
             id: "event-detail",
+            path: ":id",
             loader: getEventsLoader,
             children: [
               {
@@ -54,6 +60,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "edit",
+                loader: loaderCheckAuth,
                 action: addEvents,
                 element: (
                   <Suspense fallback={<p className="text-center">Loading...</p>}>
@@ -65,6 +72,7 @@ const router = createBrowserRouter([
           },
           {
             path: "new",
+            loader: loaderCheckAuth,
             action: addEvents,
             element: (
               <Suspense fallback={<p className="text-center">Loading...</p>}>
@@ -77,7 +85,16 @@ const router = createBrowserRouter([
       {
         path: "auth",
         action: actionAuthentication,
-        element: <Authentication />,
+        element: (
+          <Suspense fallback={<p className="text-center">Loading...</p>}>
+            <Authentication />
+          </Suspense>
+        ),
+      },
+      {
+        path: "logout",
+        action: logoutAction,
+        element: null,
       },
     ],
   },
