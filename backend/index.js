@@ -32,6 +32,7 @@ app.use((error, req, res, next) => {
 });
 
 /* Route for events and blogs */
+app.get("/", (req, res) => res.send("Express on Vercel"));
 app.use("/events", EventBlogs);
 app.use("/auth", Authentication);
 
