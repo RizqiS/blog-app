@@ -22,9 +22,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// check auth
-// router.use(checkAuthMiddleware);
-// end
+router.use(checkAuthMiddleware);
 
 router.post("/", async (req, res, next) => {
   console.log(req.token);

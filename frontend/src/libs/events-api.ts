@@ -1,10 +1,13 @@
 import { ActionFunctionArgs, LoaderFunctionArgs, json, redirect } from "react-router-dom";
+import { getToken } from "../util/auth-token";
 
 const url: string = import.meta.env.VITE_BACEND_URL as string;
 type Params = {
   request: Request;
   id: string;
 };
+
+const token = getToken();
 
 export async function getEvents({ params }: LoaderFunctionArgs<Params>) {
   let urlEvents = url + "/events";
@@ -34,13 +37,16 @@ export async function addEvents({ params, request }: ActionFunctionArgs<Params>)
     newUrl += `/${params.id}`;
   }
 
-  const resEvents = await fetch(newUrl, {
+  const config = {
     method: request.method,
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
     body: JSON.stringify(events),
-  });
+  };
+
+  const resEvents = await fetch(newUrl, config);
   const data = await resEvents.json();
   if (!resEvents) {
     json({ message: data.message }, { status: data.status });
@@ -50,6 +56,9 @@ export async function addEvents({ params, request }: ActionFunctionArgs<Params>)
 
 export async function deleteEvents({ params, request }: LoaderFunctionArgs<Params>) {
   await fetch(url + "/events/" + params.id, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
     method: request.method,
   });
   return redirect("/");

@@ -19,7 +19,7 @@ export default function NavbarBlogs() {
           </NavLink>
         </li>
         <li>
-          <NavLink to={"/auth"} className={activeLink}>
+          <NavLink to={"/auth?mode=login"} className={activeLink}>
             Login
           </NavLink>
         </li>

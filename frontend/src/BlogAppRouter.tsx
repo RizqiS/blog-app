@@ -1,8 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { getEvents as getEventsLoader, addEvents, deleteEvents } from "./libs/events-api";
+import { actionAuthentication } from "./libs/auth-api";
 import RootLayout from "./layout/RootLayout";
 import HomeBlogs from "./pages/HomeBlogs";
 import { lazy, Suspense } from "react";
+import Authentication from "./pages/events-blog/Authentication";
 
 // import EventDetails from "./pages/EventDetails";
 // import EventNews from "./pages/EventNews";
@@ -74,7 +76,8 @@ const router = createBrowserRouter([
       },
       {
         path: "auth",
-        element: null,
+        action: actionAuthentication,
+        element: <Authentication />,
       },
     ],
   },
