@@ -1,18 +1,19 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { getEvents as getEventsLoader, addEvents, deleteEvents } from "./libs/events-api";
-import { actionAuthentication } from "./libs/auth-api";
 import RootLayout from "./layout/RootLayout";
 import HomeBlogs from "./pages/HomeBlogs";
 import { lazy, Suspense } from "react";
-import { logoutAction } from "./pages/events-blog/Logout";
 import { loaderToken, loaderCheckAuth } from "./util/mytoken";
-import ErrorPages from "./pages/Errors";
 
+// import { addEvents, deleteEvents } from "./libs/events-api";
+// import { logoutAction } from "./pages/events-blog/Logout";
+// import { actionAuthentication } from "./libs/auth-api";
+// import ErrorPages from "./pages/Errors";
 // import EventDetails from "./pages/EventDetails";
 // import EventNews from "./pages/EventNews";
 // import EventEdits from "./pages/EventEdits";
 // import EventsBlog from "./pages/EventsBlog";
 
+const ErrorPages = lazy(() => import("./pages/Errors"));
 const EventDetails = lazy(() => import("./pages/events-blog/EventDetails"));
 const EventNews = lazy(() => import("./pages/events-blog/EventNews"));
 const EventEdits = lazy(() => import("./pages/events-blog/EventEdits"));
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
     id: "token",
     path: "/",
     loader: loaderToken,
-    errorElement: <ErrorPages />,
+    errorElement: (
+      <Suspense>
+        <ErrorPages />
+      </Suspense>
+    ),
     element: <RootLayout />,
     children: [
       {
@@ -33,11 +38,10 @@ const router = createBrowserRouter([
       },
       {
         path: "events",
-        element: null,
         children: [
           {
-            loader: getEventsLoader,
             index: true,
+            loader: (meta) => import("./libs/events-api").then((module) => module.getEvents(meta)),
             element: (
               <Suspense>
                 <EventsBlog />
@@ -47,11 +51,11 @@ const router = createBrowserRouter([
           {
             id: "event-detail",
             path: ":id",
-            loader: getEventsLoader,
+            loader: (meta) => import("./libs/events-api").then((module) => module.getEvents(meta)),
             children: [
               {
                 path: "detail",
-                action: deleteEvents,
+                action: (meta) => import("./libs/events-api").then((module) => module.deleteEvents(meta)),
                 element: (
                   <Suspense fallback={<p className="text-center">Loading...</p>}>
                     <EventDetails />
@@ -61,7 +65,7 @@ const router = createBrowserRouter([
               {
                 path: "edit",
                 loader: loaderCheckAuth,
-                action: addEvents,
+                action: (meta) => import("./libs/events-api").then((module) => module.addEvents(meta)),
                 element: (
                   <Suspense fallback={<p className="text-center">Loading...</p>}>
                     <EventEdits />
@@ -73,7 +77,7 @@ const router = createBrowserRouter([
           {
             path: "new",
             loader: loaderCheckAuth,
-            action: addEvents,
+            action: (meta) => import("./libs/events-api").then((module) => module.addEvents(meta)),
             element: (
               <Suspense fallback={<p className="text-center">Loading...</p>}>
                 <EventNews />
@@ -84,7 +88,7 @@ const router = createBrowserRouter([
       },
       {
         path: "auth",
-        action: actionAuthentication,
+        action: (meta) => import("./libs/auth-api").then((module) => module.actionAuthentication(meta)),
         element: (
           <Suspense fallback={<p className="text-center">Loading...</p>}>
             <Authentication />
@@ -93,7 +97,7 @@ const router = createBrowserRouter([
       },
       {
         path: "logout",
-        action: logoutAction,
+        action: (meta) => import("./pages/events-blog/Logout").then((module) => module.logoutAction(meta)),
         element: null,
       },
     ],

@@ -37,7 +37,6 @@ router.get("/:id", async (req, res, next) => {
 router.use(checkAuthMiddleware);
 
 router.post("/", async (req, res, next) => {
-  console.log(req.token);
   let errors = {};
   if (!isValidText(req.body.title)) {
     errors.title = "Invalid Title";
