@@ -23,9 +23,6 @@ export default function HomeBlogs() {
       <div>
         <HeaderBlog />
         <div className="mt-12 mb-12">{events && events.length !== 0 && <ContentArticle events={events} />}</div>
-        <div>
-          <h2>FOOTER</h2>
-        </div>
       </div>
     </section>
   );

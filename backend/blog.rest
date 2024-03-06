@@ -44,3 +44,6 @@ Content-Type: application/json
    "description": "description latest",
    "image": "https://t.ctcdn.com.br/uyqmM08mwWpaNTwOlWIxW9a0DjU=/1400x788/smart/i460517.png"
 }
+
+###
+GET https://blog-app-three-snowy.vercel.app/events
